@@ -381,10 +381,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup, branch conventions, and 
 
 Apache License 2.0 — the same license as [Kubescape](https://github.com/kubescape/kubescape) and [kubevuln](https://github.com/kubescape/kubevuln).
 
----
 
-<div align="center">
-
-Built for the [CNCF LFX Mentorship Term 3 2026](https://mentorship.lfx.linuxfoundation.org/project/f83cb3c4-2acf-4f80-b734-83bbd43e0ffd) — Kubescape External VEX Ingestion project.
-
-</div>
