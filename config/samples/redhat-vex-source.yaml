@@ -1,0 +1,10 @@
+apiVersion: security.vexbridge.io/v1alpha1
+kind: VEXSource
+metadata:
+  name: redhat-vex
+  namespace: vexbridge-system
+spec:
+  url: "https://access.redhat.com/security/data/csaf/v2/vex/"
+  format: CSAF
+  imageSelector: "registry.access.redhat.com/*"
+  refreshInterval: 6h

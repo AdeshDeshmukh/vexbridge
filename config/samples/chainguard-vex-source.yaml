@@ -1,0 +1,10 @@
+apiVersion: security.vexbridge.io/v1alpha1
+kind: VEXSource
+metadata:
+  name: chainguard-vex
+  namespace: vexbridge-system
+spec:
+  url: "https://packages.cgr.dev/chainguard/vex/chainguard.openvex.json"
+  format: OpenVEX
+  imageSelector: "cgr.dev/chainguard/*"
+  refreshInterval: 12h

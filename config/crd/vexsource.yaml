@@ -1,0 +1,113 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.1
+  name: vexsources.security.vexbridge.io
+spec:
+  group: security.vexbridge.io
+  names:
+    kind: VEXSource
+    listKind: VEXSourceList
+    plural: vexsources
+    singular: vexsource
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.format
+      name: Format
+      type: string
+    - jsonPath: .status.lastSyncTime
+      name: LastSync
+      type: date
+    - jsonPath: .status.statementCount
+      name: Statements
+      type: integer
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: VEXSource declares an external VEX feed the controller should ingest.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: VEXSourceSpec declares a single external VEX feed.
+            properties:
+              format:
+                description: 'Format selects the parser: OpenVEX or CSAF.'
+                type: string
+              imageSelector:
+                description: |-
+                  ImageSelector scopes ingestion to images whose reference
+                  matches this glob pattern. Empty means accept all images.
+                type: string
+              refreshInterval:
+                description: RefreshInterval is how often the controller re-fetches the feed.
+                type: string
+              url:
+                description: URL is the HTTP(S) endpoint serving the feed document or index.
+                type: string
+            required:
+            - format
+            - url
+            type: object
+          status:
+            description: VEXSourceStatus records the last sync result.
+            properties:
+              conditions:
+                description: Conditions follows the standard Kubernetes condition convention.
+                items:
+                  description: Condition contains details for one aspect of the current state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              feedHash:
+                description: |-
+                  FeedHash is the SHA-256 of the last fetched body, used for
+                  change detection without storing the full document.
+                type: string
+              lastSyncTime:
+                description: LastSyncTime is when the feed was last successfully fetched.
+                format: date-time
+                type: string
+              statementCount:
+                description: |-
+                  StatementCount is how many VEX statements were ingested from
+                  the most recent fetch.
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
